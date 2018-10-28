@@ -1,5 +1,10 @@
 package linkedlist;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class ArryaysQuestions {
 	
 	
@@ -56,7 +61,21 @@ public class ArryaysQuestions {
 	  	     return answer;
 	  	  }
 	  	
-	 
+	   
+	  	public static Map<String,Long> getListOfMostOccoringWords(String text){
+	  		Stream<String> stream = Stream.of(text.toLowerCase().split("\\W+")).parallel();  
+	  		Map<String,Long> wordFreq= stream.collect(Collectors.groupingBy(String::toString,Collectors.counting()));
+	  	    return wordFreq;
+	  	}
+	  	
+	  	public static List<String> getTopKOccurences(Map<String,Long> wordfreqMap) {
+	  		
+	  		
+	  		return null;
+	  		
+	  	}
+	  	
+	  	
 	    public static void main(String[] args)  {
 	        int arr[] = {1, 56, 58, 57, 90, 92, 94, 93, 91, 45};
 	        System.out.println("Length of the longest contiguous subarray is "
