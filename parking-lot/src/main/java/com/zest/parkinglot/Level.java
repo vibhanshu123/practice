@@ -15,29 +15,31 @@ public class Level {
 		availableSlots = numberOfSlots;
 	}
 
-	public boolean parkVehicle(Vehicle vehicle) {
+	public int parkVehicle(Vehicle vehicle) {
 		if (getAvailableslots() < vehicle.getSize().getSlotSize()) {
-			return false;
+			return -1;
 		}
-		int spotnumber = findAvailableSlots(vehicle);
-		if (spotnumber < 0) {
-			return false;
+		int slotNumber = findAvailableSlots(vehicle);
+		if (slotNumber < 0) {
+			return -1;
 		}
-
-		return parkStartingAtSlot(spotnumber, vehicle);
+		if(parkStartingAtSlot(slotNumber, vehicle))
+			return slotNumber;
+		else 
+			return -1;
 	}
 
 	private int findAvailableSlots(Vehicle vehicle) {
 		int spotsNeeded = vehicle.getSize().getSlotSize();
-		int spotsFound = 0;
+		int slotsFound = 0;
 		int count = 0;
-		for (ParkingSlot spot : parkingSlots) {
-			if (spot.canFitVehicle(vehicle)) {
-				spotsFound++;
+		for (ParkingSlot slot : parkingSlots) {
+			if (slot.canFitVehicle(vehicle)) {
+				slotsFound++;
 			} else {
-				spotsFound = 0;
+				slotsFound = 0;
 			}
-			if (spotsFound == spotsNeeded) {
+			if (slotsFound == spotsNeeded) {
 				return count - (spotsNeeded - 1);
 			}
 			count++;
@@ -46,7 +48,6 @@ public class Level {
 	}
 
 	private boolean parkStartingAtSlot(int slotNumber, Vehicle vehicle) {
-		//vehicle.clearspots();
 		boolean success = true;
 		for (int i = slotNumber; i < slotNumber + vehicle.size.getSlotSize(); i++) {
 			success &= parkingSlots[i].park(vehicle);
@@ -63,10 +64,13 @@ public class Level {
 		availableSlots++;
 	}
 
-	public Vehicle leaveVehicle(int slotNumber) {
-		return parkingSlots[slotNumber].removeVehicle();
+	public void leaveVehicle(int slotNumber) {
+		parkingSlots[slotNumber].removeVehicle();
 	}
-	
+
+	public ParkingSlot[] getParkingSlots() {
+		return parkingSlots;
+	}
 	
 
 }

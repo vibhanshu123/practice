@@ -22,7 +22,7 @@ public class InputCode {
 		Vehicle vehicle = null;
 		CommandInvoker commander = new CommandInvoker();
 
-		File file = new File("/Users/vibhanshu/Desktop/workspace/robot/src/robot/inputFile.txt");
+		File file = new File("src/main/resources/ParkingInput1.txt");
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(file));
@@ -31,6 +31,7 @@ public class InputCode {
 				String[] command = buffer.split(" ");
 				if (command[0].equalsIgnoreCase("create_parking_lot")) {
 					parkingLot = new ParkingLot(1, Integer.parseInt(command[1]));
+					continue;
 				} else if (command[0].equalsIgnoreCase("park")) {
 					vehicle = new Car(command[1], command[2]);
 					commandToParkingLot = new Park(parkingLot, vehicle);
@@ -44,8 +45,8 @@ public class InputCode {
 					commandToParkingLot = new SlotNumberForColour(parkingLot, command[1]);
 				} else if (command[0].equalsIgnoreCase("slot_number_for_registration_number")) {
 					commandToParkingLot = new SlotNumberForVehicleNumber(parkingLot, command[1]);
-
 				}
+				
 				if (commandToParkingLot == null) {
 					logger.error("Not Valid Command");
 					continue;
@@ -60,7 +61,6 @@ public class InputCode {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 

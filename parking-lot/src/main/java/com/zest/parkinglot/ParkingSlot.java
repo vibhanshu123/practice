@@ -46,11 +46,9 @@ public class ParkingSlot {
 		return true;
 	}
 	
-	public Vehicle removeVehicle() {
+	public void removeVehicle() {
 		level.spotFreed();
-		Vehicle v = vehicle;
 		vehicle = null;
-		return v;
 	}
 
 	@Override

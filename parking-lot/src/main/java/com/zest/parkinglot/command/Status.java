@@ -12,7 +12,6 @@ public class Status implements CommandToParkingLot{
 	
 	public void executeCommand() {
 		parkingLot.report();
-		
 	}
 
 }

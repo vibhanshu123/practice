@@ -37,6 +37,10 @@ public abstract class Vehicle {
 		}
 		parkingSlots.clear();
 	}
+	
+	public int getSlotNumber() {
+		return parkingSlots.get(0).getSlotNumber();
+	}
 
 	public abstract boolean canFitInSlot(ParkingSlot slot);
 }
