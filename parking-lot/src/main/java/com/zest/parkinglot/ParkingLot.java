@@ -23,18 +23,14 @@ public class ParkingLot {
 
 	}
 
-	public void parkVehicle(Vehicle vehicle) {
+	public int parkVehicle(Vehicle vehicle) {
 		int slotNumber = -1;
 		for (int i = 0; i < levels.length; i++) {
 			slotNumber = levels[i].parkVehicle(vehicle);
 			if (slotNumber > 0)
 				break;
 		}
-		if (slotNumber < 0) {
-			logger.error("Sorry, parking lot is full");
-		} else {
-			logger.info("Allocated slot number: " + (slotNumber+1));
-		}
+		return (slotNumber+1);
 	}
 
 	public void leaveVehicle(int slotNumber) {
@@ -43,57 +39,54 @@ public class ParkingLot {
 		
 	}
 
-	public void report() {
-		Arrays.asList(levels[0].getParkingSlots()).stream()
+	public List<ParkingSlot> report() {
+		return Arrays.asList(levels[0].getParkingSlots()).stream()
 		.filter(t -> !t.isAvailable())
-		.forEach(t -> logger.info(t.toString()));
+		.collect(Collectors.toList());
 	}
 
-	public void getVehicleNumberForColours(String colour) {
+	public String getVehicleNumberForColours(String colour) {
+		String vehicle = null;
 		List<Vehicle> vehicles = Arrays.asList(levels[0].getParkingSlots()).stream()
 				.filter(t -> !t.isAvailable())
 				.map(t -> t.getVehicle())
 				.filter(t -> t.getColour().equalsIgnoreCase(colour))
 				.collect(Collectors.toList());
 		if (vehicles.size() > 0) {
-			String vehicle = vehicles.stream()
+			 vehicle = vehicles.stream()
 					.map(v -> v.getVehiclenumber())
 					.collect(Collectors.joining(","));
-			logger.info(vehicle);
-		} else {
-			logger.warn("Not Found");
-		}
+		} 
+		return vehicle;
 	}
 
-	public void getSlotNumberForColour(String colour) {
+	public String getSlotNumberForColour(String colour) {
+		String slots = null;
 		List<Vehicle> vehicles = Arrays.asList(levels[0].getParkingSlots()).stream()
 				.filter(t -> !t.isAvailable())
 				.map(t -> t.getVehicle())
 				.filter(t -> t.getColour().equalsIgnoreCase(colour))
 				.collect(Collectors.toList());
 		if (vehicles.size() > 0) {
-			String slots = vehicles.stream()
+			slots = vehicles.stream()
 					.map(v -> Integer.toString(v.getSlotNumber()+1))
 					.collect(Collectors.joining(","));
-			logger.info(slots);
-		} else {
-			logger.warn("Not Found");
-		}
+		} 
+		return slots;
 
 	}
 
-	public void getSlotNumberForVehicleNumber(String vehicleNumber) {
+	public int getSlotNumberForVehicleNumber(String vehicleNumber) {
+		int slotNumber = -1;
 		List<Vehicle> vehicles = Arrays.asList(levels[0].getParkingSlots()).stream()
 				.filter(t -> !t.isAvailable())
 				.map(t -> t.getVehicle())
 				.filter(t -> t.getVehiclenumber().equalsIgnoreCase(vehicleNumber))
 				.collect(Collectors.toList());
 		if (vehicles.size() > 0) {
-			logger.info(Integer.toString(vehicles.get(0).getSlotNumber()+1));
-		} else {
-			logger.warn("Not Found");
-		}
-
+			slotNumber = vehicles.get(0).getSlotNumber()+1;
+		} 
+		return slotNumber;
 	}
 
 }
