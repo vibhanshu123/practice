@@ -53,7 +53,7 @@ public class ParkingSlot {
 
 	@Override
 	public String toString() {
-		return slotNumber +" "+vehicle.getVehiclenumber()+" "+vehicle.getColour()  ;
+		return (slotNumber+1) +" "+vehicle.getVehiclenumber()+" "+vehicle.getColour()  ;
 	}
 	
 	
